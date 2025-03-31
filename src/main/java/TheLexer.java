@@ -1,7 +1,5 @@
 import java.io.*;
-import java.util.Map;
-import java.util.Vector;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Lexer class to analyze the input file
