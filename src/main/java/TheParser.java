@@ -11,9 +11,114 @@ public class TheParser {
 	}
 	
 	public void run() {
-		RULE_PROGRAM();
+		RULE_CLASS();
+	}
+
+	//our methods
+	private void RULE_CLASS() {
+		System.out.println("- RULE_CLASS");
+		if (tokens.get(currentToken).getValue().equals("class")) {
+			currentToken++;
+			System.out.println(tokens.get(currentToken-1).getValue());
+		} else {
+			error(1);
+		}
+
+		if (tokens.get(currentToken).getType().equals("IDENTIFIER")) {
+			currentToken++;
+			System.out.println(tokens.get(currentToken-1).getValue());
+		} else {
+			error(2);
+		}
+
+		if (tokens.get(currentToken).getValue().equals("{")) {
+			currentToken++;
+			System.out.println(tokens.get(currentToken-1).getValue());
+		} else {
+			error(3);
+		}
+
+		RULE_METHOD();
+
+		if (tokens.get(currentToken).getValue().equals("}")) {
+			currentToken++;
+			System.out.println("- }");
+		} else {
+			error(4);
+		}
+
+	}
+
+	private void RULE_METHOD(){
+		System.out.println("-- RULE_METHOD");
+
+		boolean entro=false;
+		while(tokens.get(currentToken).getType().equals("KEYWORD")){
+			currentToken++;
+			System.out.println(tokens.get(currentToken-1).getValue());
+			entro=true;
+		}
+		if(!entro)
+			error(5);
+		
+		if (tokens.get(currentToken).getType().equals("IDENTIFIER")) {
+			currentToken++;
+			System.out.println(tokens.get(currentToken-1).getValue());
+		} else {
+			error(6);
+		}
+
+		if (tokens.get(currentToken).getValue().equals("(")) {
+			currentToken++;
+			System.out.println(tokens.get(currentToken-1).getValue());
+		} else {
+			error(7);
+		}
+		if(!tokens.get(currentToken).getValue().equals(")"))
+			RULE_PARAMS();
+
+		if (tokens.get(currentToken).getValue().equals(")") && tokens.get(currentToken+1).getValue().equals("{")) {
+			currentToken+=2;
+			System.out.println(tokens.get(currentToken-2).getValue() + tokens.get(currentToken-1).getValue());
+		} else {
+			error(10);
+		}
+	}
+
+	private void RULE_PARAMS(){
+		while(true){
+			if (tokens.get(currentToken).getType().equals("KEYWORD")) {
+				currentToken++;
+				System.out.println(tokens.get(currentToken-1).getValue());
+			} else {
+				error(8);
+			}
+
+			if (tokens.get(currentToken).getType().equals("IDENTIFIER")) {
+				currentToken++;
+				System.out.println(tokens.get(currentToken-1).getValue());
+			} else {
+				error(9);
+			}
+
+			if (tokens.get(currentToken).getValue().equals(",")) {
+				currentToken++;
+				System.out.println(tokens.get(currentToken-1).getValue());
+			} else {
+				break;
+			}
+
+		}
 	}
 	
+
+
+
+
+
+
+
+
 	private void RULE_PROGRAM() {
 		System.out.println("- RULE_PROGRAM");
 		if (tokens.get(currentToken).getValue().equals("{")) {

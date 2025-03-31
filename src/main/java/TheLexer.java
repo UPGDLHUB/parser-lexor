@@ -53,6 +53,10 @@ public class TheLexer {
 		dfa.addTransition("s0", "*", "operator");
 		dfa.addTransition("s0", "+", "operator");
 		dfa.addTransition("s0", "-", "operator");
+		dfa.addTransition("s0", "&", "operator");
+		dfa.addTransition("s0", "|", "operator");
+		dfa.addTransition("operator", "&", "operator");
+		dfa.addTransition("operator", "|", "operator");
 		dfa.addTransition("operator", "=", "operatorDue");
 
 
