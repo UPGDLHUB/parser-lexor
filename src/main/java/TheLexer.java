@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Map;
 import java.util.Vector;
 import java.util.Set;
 
@@ -38,6 +39,10 @@ public class TheLexer {
 		//createStatesFor(   case,	state 1, 	state2,		Automata )
 		dfa= createStatesFor("a-z", "s0", "sIden", dfa);
 		dfa= createStatesFor("A-Z", "s0", "sIden", dfa);
+		dfa.addTransition("s0", "$", "sIden");
+		dfa.addTransition("sIden", "$", "sIden");
+		dfa.addTransition("s0", "_", "sIden");
+		dfa.addTransition("sIden", "_", "sIden");
 		dfa= createStatesFor("a-z", "sIden", "sIden", dfa);
 		dfa= createStatesFor("A-Z", "sIden", "sIden", dfa);
 		dfa= createStatesFor("0-9", "sIden", "sIden", dfa);
@@ -52,6 +57,7 @@ public class TheLexer {
 		dfa.addTransition("s0", "-", "operator");
 		dfa.addTransition("operator", "=", "operatorDue");
 
+
 		//for numbers 1-9
 		dfa= createStatesFor("1-9", "s0", "integer", dfa);
 		dfa= createStatesFor("0-9", "integer", "integer", dfa);
@@ -64,6 +70,7 @@ public class TheLexer {
 		//for string in ''
 		dfa.addTransition("s0", "'", "chars");
 		dfa= createStatesFor("all", "chars", "charsM", dfa);
+		dfa.addTransition("chars", "\'", "incChar");
 		dfa.addTransition("charsM", "'", "charsEnd");
 
 
@@ -228,7 +235,7 @@ public class TheLexer {
 				}
 
 				nextState = dfa.getNextState(currentState, currentChar);
-				if ((nextState.equals("INVALID") && (((isNumber(currentState) && isOperator(currentChar)))||
+				if ((nextState.equals("INVALID") && ((((isNumber(currentState)||currentState.equals("sIden")) && isOperator(currentChar)))||
 						(isOperator(string))))){
 					tokens.add(new TheToken(string, dfa.getAcceptStateName(currentState)));
 					string = "";
@@ -287,12 +294,13 @@ public class TheLexer {
 	}
 
 	private boolean isOperator(char c) {
-		return c == '+' || c == '-' || c == '*' || c == '/' || c == '%';
+		return "+-*/%=<>!".indexOf(c) != -1;
 	}
 
 	private boolean isOperator(String c) {
-		return c.equals("+")||c.equals("-")||c.equals("<")||c.equals(">")||c.equals("<=")||c.equals(">=")||
-				c.equals("=")||c.equals("==")||c.equals("!=")||c.equals("*")||c.equals("/")||c.equals("%");
+		return c.equals("+") || c.equals("-") || c.equals("*") || c.equals("/") || c.equals("%") ||
+				c.equals("=") || c.equals("==") || c.equals("!=") ||
+				c.equals("<") || c.equals(">") || c.equals("<=") || c.equals(">=");
 	}
 
 	private boolean isNumber(String c) {
@@ -302,12 +310,12 @@ public class TheLexer {
 
 	//Next 2 functions are for keyword identification
 	private static final Set<String> KEYWORDS = Set.of(
-		"abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const",
-		"continue", "default", "do", "double", "else", "enum", "extends", "final", "finally", "float",
-		"for", "goto", "if", "implements", "import", "instanceof", "int", "interface", "long",
-		"native", "new", "package", "private", "protected", "public", "return", "short", "static",
-		"strictfp", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "try",
-		"void", "volatile", "while", "String","true","false"
+			"abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const",
+			"continue", "default", "do", "double", "else", "enum", "extends", "final", "finally", "float",
+			"for", "goto", "if", "implements", "import", "instanceof", "int", "interface", "long",
+			"native", "new", "package", "private", "protected", "public", "return", "short", "static",
+			"strictfp", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "try",
+			"void", "volatile", "while", "String","true","false"
 	);
 
 	private boolean isKeyWord(String s) {
@@ -326,22 +334,22 @@ public class TheLexer {
 				for(char c = 'a'; c <= 'z'; c++) {
 					dfa.addTransition(state1, String.valueOf(c), state2);
 				}
-			break;
+				break;
 			case "A-Z":
 				for(char c = 'A'; c <= 'Z'; c++) {
 					dfa.addTransition(state1, String.valueOf(c), state2);
 				}
-			break;
+				break;
 			case "0-9":
 				for(char c = '0'; c <= '9'; c++) {
 					dfa.addTransition(state1, String.valueOf(c), state2);
 				}
-			break;
+				break;
 			case "1-9":
 				for(char c = '1'; c <= '9'; c++) {
 					dfa.addTransition(state1, String.valueOf(c), state2);
 				}
-			break;
+				break;
 			case "all":
 				for (char c = 32; c <= 126; c++) {
 					if ((c != '"')&&(c != '\\')) {
@@ -380,5 +388,4 @@ public class TheLexer {
 	public Vector<TheToken> getTokens() {
 		return tokens;
 	}
-
 }

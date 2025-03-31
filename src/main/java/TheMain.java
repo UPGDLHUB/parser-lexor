@@ -11,7 +11,6 @@ import java.util.Vector;
 public class TheMain {
 	
 	public static void main(String[] args) throws IOException {
-		double example = 00009.1;
 		File file = new File("src/main/resources/input.txt");
 		TheLexer lexer = new TheLexer(file);
 		lexer.run();
