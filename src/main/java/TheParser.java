@@ -199,7 +199,14 @@ public class TheParser {
 			error(7);
 		}
 
-		RULE_EXPRESSION();
+		if (tokens.get(currentToken).getType().equals("KEYWORD") &&
+				currentToken + 2 < tokens.size() &&
+				tokens.get(currentToken + 2).getValue().equals("=")) {
+			currentToken++;
+			RULE_ASSIGNMENT();
+		} else {
+			error(7);
+		}
 
 		if (tokens.get(currentToken).getValue().equals(";")) {
 			currentToken++;
@@ -217,7 +224,7 @@ public class TheParser {
 			error(7);
 		}
 
-		RULE_EXPRESSION();
+		RULE_ASSIGNMENT();
 
 		if (tokens.get(currentToken).getValue().equals(")")) {
 			currentToken++;
@@ -549,6 +556,7 @@ public class TheParser {
 				error(4);
 			}
 		} else {
+
 			error(5);
 		}
 	}
