@@ -209,6 +209,8 @@ public class TheLexer {
 			if (insideString || // Inside string
 					(!isOperator(currentChar) && !isDelimiter(currentChar) && !isSpace(currentChar)) ||
 					((currentChar == '-' || currentChar == '+') && currentState.equals("incExp")) ||
+					((currentChar == '/'||currentChar == '>'||currentChar == '<'||currentChar == '!'||currentChar == '=') && currentState.equals("s0")) ||
+					(isOperator(string+currentChar)) ||
 					(currentChar == '/' && currentState.equals("s0")) ||
 					(currentChar == '/' && currentState.equals("div")) ||
 					(currentChar == '*' && currentState.equals("div"))) {
