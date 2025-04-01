@@ -470,7 +470,7 @@ public class TheParser {
 	
 	public void RULE_Y() {
 		System.out.println("----- RULE_Y");
-		if (tokens.get(currentToken).getValue().equals("!")) {
+		while (tokens.get(currentToken).getValue().equals("!")) {
 			currentToken++;
 			System.out.println("----- !");
 		}
