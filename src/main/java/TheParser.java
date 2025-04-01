@@ -341,9 +341,9 @@ public class TheParser {
 	public void RULE_EXPRESSION() {
 		System.out.println("--- RULE_EXPRESSION");
 		RULE_X();
-		while (tokens.get(currentToken).getValue().equals("|")) {
+		while (tokens.get(currentToken).getValue().equals("||")) {
 			currentToken++;
-			System.out.println("--- |");
+			System.out.println("--- ||");
 			RULE_X();
 		}
 	}
@@ -351,9 +351,9 @@ public class TheParser {
 	public void RULE_X() {
 		System.out.println("---- RULE_X");
 		RULE_Y();
-		while (tokens.get(currentToken).getValue().equals("&")) {
+		while (tokens.get(currentToken).getValue().equals("&&")) {
 			currentToken++;
-			System.out.println("---- |");
+			System.out.println("---- &&");
 			RULE_Y();
 		}
 	}
