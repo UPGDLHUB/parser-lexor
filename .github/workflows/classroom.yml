@@ -26,4 +26,4 @@ jobs:
       run: mvn clean install
     - name: Run Maven Tests
       run: |
-        mvn test -Dtest=TestTheParser
+        mvn test -Dtest=TheParserTest
