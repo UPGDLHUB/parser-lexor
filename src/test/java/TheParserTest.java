@@ -7,7 +7,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestTheParser {
+public class TheParserTest {
 	
 	private TheParser parser;
 	private Vector<TheToken> tokens;
