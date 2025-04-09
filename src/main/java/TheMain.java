@@ -10,7 +10,7 @@ import java.util.Vector;
  */
 public class TheMain {
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		File file = new File("../resources/inputAssignment.txt");
 		TheLexer lexer = new TheLexer(file);
 		lexer.run();
