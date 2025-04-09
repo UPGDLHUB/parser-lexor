@@ -10,12 +10,12 @@ public class TheParser {
 		currentToken = 0;
 	}
 	
-	public void run() {
+	public void run() throws Exception{
 		RULE_CLASS();
 	}
 
 	//our methods
-	private void RULE_CLASS() {
+	private void RULE_CLASS()throws Exception {
 		System.out.println("- RULE_CLASS");
 		if (tokens.get(currentToken).getValue().equals("class")) {
 			currentToken++;
@@ -51,7 +51,7 @@ public class TheParser {
 
 	}
 
-	private void RULE_METHOD(){
+	private void RULE_METHOD()throws Exception{
 		System.out.println("-- RULE_METHOD");
 
 		boolean entro=false;
@@ -94,7 +94,7 @@ public class TheParser {
 		}
 	}
 
-	private void RULE_PARAMS(){
+	private void RULE_PARAMS()throws Exception{
 		while(true){
 			if (tokens.get(currentToken).getType().equals("KEYWORD")) {
 				currentToken++;
@@ -121,7 +121,7 @@ public class TheParser {
 	}
 
 
-	private void RULE_WHILE(){
+	private void RULE_WHILE()throws Exception{
 		if(tokens.get(currentToken).getValue().equals("while")){
 			currentToken++;
 		}else{
@@ -142,7 +142,7 @@ public class TheParser {
 		RULE_PROGRAM();
 	}
 
-	private void RULE_IF() {
+	private void RULE_IF() throws Exception{
 		System.out.println("-- RULE_IF");
 
 		if (tokens.get(currentToken).getValue().equals("if")) {
@@ -182,7 +182,7 @@ public class TheParser {
 		}
 	}
 
-	private void RULE_FOR() {
+	private void RULE_FOR() throws Exception{
 		System.out.println("-- RULE_FOR");
 
 		if (tokens.get(currentToken).getValue().equals("for")) {
@@ -236,7 +236,7 @@ public class TheParser {
 		// Llamar a RULE_PROGRAM para procesar el cuerpo del for
 		RULE_PROGRAM();
 	}
-	private void RULE_DO_WHILE() {
+	private void RULE_DO_WHILE()throws Exception {
 		System.out.println("-- RULE_DO_WHILE");
 
 		if (tokens.get(currentToken).getValue().equals("do")) {
@@ -279,7 +279,7 @@ public class TheParser {
 		}
 	}
 
-	private void RULE_RETURN() {
+	private void RULE_RETURN()throws Exception {
 		System.out.println("-- RULE_RETURN");
 
 		// Verify that the token is "return"
@@ -294,7 +294,7 @@ public class TheParser {
 			RULE_EXPRESSION();
 		}
 	}
-	private void RULE_CALL_METHOD() {
+	private void RULE_CALL_METHOD() throws Exception{
 		System.out.println("-- CALL_METHOD_RULE");
 
 		if (tokens.get(currentToken).getType().equals("IDENTIFIER")) {
@@ -323,7 +323,7 @@ public class TheParser {
 		}
 	}
 
-	private void RULE_CALL_PARAMS() {
+	private void RULE_CALL_PARAMS()throws Exception {
 		System.out.println("-- CALL_PARAMS_RULE");
 
 		// Si el siguiente token es ")" no hay parámetros
@@ -346,7 +346,7 @@ public class TheParser {
 
 
 
-	private void RULE_PROGRAM() {
+	private void RULE_PROGRAM() throws Exception{
 		System.out.println("- RULE_PROGRAM");
 		if (tokens.get(currentToken).getValue().equals("{")) {
 			currentToken++;
@@ -363,7 +363,7 @@ public class TheParser {
 		}
 	}
 
-	public void RULE_BODY() {
+	public void RULE_BODY()throws Exception {
 		System.out.println("-- RULE_BODY");
 		while (currentToken < tokens.size() && !tokens.get(currentToken).getValue().equals("}")) {
 			if (tokens.get(currentToken).getType().equals("IDENTIFIER")) {
@@ -414,7 +414,7 @@ public class TheParser {
 			}
 		}
 	}
-	private void RULE_VARIABLE() {
+	private void RULE_VARIABLE() throws Exception{
 		System.out.println("-- RULE_VARIABLE");
 
 		if (tokens.get(currentToken).getValue().equals("int") ||
@@ -436,7 +436,7 @@ public class TheParser {
 			error(5);
 		}
 	}
-	private void RULE_ASSIGNMENT() {
+	private void RULE_ASSIGNMENT()throws Exception {
 		System.out.println("-- RULE_ASSIGNMENT");
 
 		if (tokens.get(currentToken).getType().equals("IDENTIFIER")) {
@@ -455,7 +455,7 @@ public class TheParser {
 		RULE_EXPRESSION();
 	}
 	
-	public void RULE_EXPRESSION() {
+	public void RULE_EXPRESSION() throws Exception{
 		System.out.println("--- RULE_EXPRESSION");
 		RULE_X();
 		while (tokens.get(currentToken).getValue().equals("||")) {
@@ -465,7 +465,7 @@ public class TheParser {
 		}
 	}
 	
-	public void RULE_X() {
+	public void RULE_X() throws Exception{
 		System.out.println("---- RULE_X");
 		RULE_Y();
 		while (tokens.get(currentToken).getValue().equals("&&")) {
@@ -475,7 +475,7 @@ public class TheParser {
 		}
 	}
 	
-	public void RULE_Y() {
+	public void RULE_Y() throws Exception{
 		System.out.println("----- RULE_Y");
 		while (tokens.get(currentToken).getValue().equals("!")) {
 			currentToken++;
@@ -484,7 +484,7 @@ public class TheParser {
 		RULE_R();
 	}
 	
-	public void RULE_R() {
+	public void RULE_R() throws Exception{
 		System.out.println("------ RULE_R");
 		RULE_E();
 		while (tokens.get(currentToken).getValue().equals("<")
@@ -498,7 +498,7 @@ public class TheParser {
 		}
 	}
 	
-	public void RULE_E() {
+	public void RULE_E() throws Exception{
 		System.out.println("------- RULE_E");
 		RULE_A();
 		while (tokens.get(currentToken).getValue().equals("-")
@@ -511,7 +511,7 @@ public class TheParser {
 		
 	}
 	
-	public void RULE_A() {
+	public void RULE_A() throws Exception{
 		System.out.println("-------- RULE_A");
 		RULE_B();
 		while (tokens.get(currentToken).getValue().equals("/")
@@ -524,7 +524,7 @@ public class TheParser {
 		
 	}
 	
-	public void RULE_B() {
+	public void RULE_B()  throws Exception{
 		System.out.println("--------- RULE_B");
 		if (tokens.get(currentToken).getValue().equals("-")) {
 			currentToken++;
@@ -533,7 +533,7 @@ public class TheParser {
 		RULE_C();
 	}
 	
-	public void RULE_C() {
+	public void RULE_C() throws Exception {
 		System.out.println("---------- RULE_C");
 		if (tokens.get(currentToken).getType().equals("IDENTIFIER")) {
 			if (currentToken + 1 < tokens.size() && tokens.get(currentToken + 1).getValue().equals("(")) {
@@ -560,12 +560,13 @@ public class TheParser {
 			error(5);
 		}
 	}
-	
-	private void error(int error) {
-		System.out.println("Error " + error +
-			" at line " + tokens.get(currentToken));
-		System.exit(1);
+
+	// @javiergs changed this
+	private void error(int error) throws Exception {
+		//System.exit(1);
+		throw new Exception("Error " + error + " at word " + tokens.get(currentToken).getValue());
 	}
+	
 	
 }
 
